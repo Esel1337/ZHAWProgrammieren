@@ -25,6 +25,7 @@ public class Decisions {
 	public void enterDecisions(String text) {
 		if (!decisions.contains(text)) {
 			decisions.add(text);
+			System.out.println("Eintrag hinzugefügt");
 		} else {
 			System.out.println("Eintrag schon vorhanden");
 		}
