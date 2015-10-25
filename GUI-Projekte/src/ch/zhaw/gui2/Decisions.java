@@ -1,4 +1,4 @@
-package gui2u5;
+package ch.zhaw.gui2;
 
 import java.util.ArrayList;
 import java.util.List;

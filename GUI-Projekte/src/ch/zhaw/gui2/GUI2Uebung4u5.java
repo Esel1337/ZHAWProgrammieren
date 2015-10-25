@@ -1,4 +1,5 @@
-package gui2u5;
+
+package ch.zhaw.gui2;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -16,7 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class GUI2U5 {
+public class GUI2Uebung4u5 {
 
 	private JFrame frame;
 
@@ -24,7 +25,7 @@ public class GUI2U5 {
 	private Decisions entscheidungen;
 	private JLabel labelCounter;
 
-	public GUI2U5() {
+	public GUI2Uebung4u5() {
 
 		entscheidungen = new Decisions();
 		createGui();
@@ -144,7 +145,7 @@ public class GUI2U5 {
 	}
 
 	public static void main(String[] args) {
-		new GUI2U5();
+		new GUI2Uebung4u5();
 
 	}
 
