@@ -1,4 +1,4 @@
-package GUI2U6;
+package gui2u5;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
