@@ -37,4 +37,10 @@ public class Decisions {
 		return decisions.get(randomIndex);
 	}
 
+	public String getSize()
+	{
+		
+		return "Du hast " + (decisions.size()) + " Entscheidungen zur Verfügung.";
+	}
+
 }

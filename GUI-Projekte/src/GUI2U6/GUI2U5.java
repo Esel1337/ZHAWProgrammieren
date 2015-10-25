@@ -22,6 +22,7 @@ public class GUI2U5 {
 
 	private JTextField eingabeFeld;
 	private Decisions entscheidungen;
+	private JLabel labelCounter;
 
 	public GUI2U5() {
 
@@ -48,6 +49,8 @@ public class GUI2U5 {
 		JButton save = createSaveButton();
 		save.addActionListener(saveListener);
 		topPanel.add(save);
+		labelCounter = new JLabel(entscheidungen.getSize());
+		topPanel.add(labelCounter);
 		frame.add(BorderLayout.NORTH, topPanel);
 
 		// Decisionsbutton zum Frame hinzu
@@ -55,7 +58,7 @@ public class GUI2U5 {
 		decisionButton.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 42));
 		frame.getContentPane().add(BorderLayout.CENTER, decisionButton);
 
-		frame.setSize(500, 500);
+		frame.setSize(800, 300);
 		frame.setVisible(true);
 	}
 
@@ -84,6 +87,7 @@ public class GUI2U5 {
 			if (!eingabeFeld.getText().isEmpty()) {
 				entscheidungen.enterDecisions(eingabeFeld.getText());
 				eingabeFeld.setText(null);
+				labelCounter.setText(entscheidungen.getSize());
 				System.out.println("Eintrag hinzugefügt");
 			} else {
 				System.out.println("Du musst etwas eingeben.");
