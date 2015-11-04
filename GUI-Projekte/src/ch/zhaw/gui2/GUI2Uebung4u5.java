@@ -89,9 +89,10 @@ public class GUI2Uebung4u5 {
 				entscheidungen.enterDecisions(eingabeFeld.getText());
 				eingabeFeld.setText(null);
 				labelCounter.setText(entscheidungen.getSize());
-				
+
 			} else {
 				System.out.println("Du musst etwas eingeben.");
+				;
 			}
 
 		}

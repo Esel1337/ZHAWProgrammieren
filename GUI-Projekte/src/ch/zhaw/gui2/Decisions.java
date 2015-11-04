@@ -1,5 +1,7 @@
 package ch.zhaw.gui2;
 
+//Notes: Man könnte noch check auf Leerzeichen mit 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
