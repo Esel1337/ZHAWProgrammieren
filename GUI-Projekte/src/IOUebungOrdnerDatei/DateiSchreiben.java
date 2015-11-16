@@ -1,4 +1,4 @@
-package ch.zhaw.java16.uebung;
+package IOUebungOrdnerDatei;
 
 import java.io.File;
 import java.io.FileWriter;

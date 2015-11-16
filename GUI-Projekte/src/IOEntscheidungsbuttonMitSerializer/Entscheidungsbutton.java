@@ -1,13 +1,14 @@
-
-package ch.zhaw.gui2;
+package IOEntscheidungsbuttonMitSerializer;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -17,22 +18,25 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class GUI2Uebung4u5 {
+public class Entscheidungsbutton implements Serializable {
 
-	private JFrame frame;
 
-	private JTextField eingabeFeld;
-	private Decisions entscheidungen;
-	private JLabel labelCounter;
+	private static final long	serialVersionUID	= 1L;
+	private JFrame		frame;
+	private Decisions	decisions;
+	private JTextField	eingabeFeld;
+	private JLabel		labelCounter;
+	private Serializer	serializer;
 
-	public GUI2Uebung4u5() {
-
-		entscheidungen = new Decisions();
+	public Entscheidungsbutton() {
+		decisions = new Decisions();
 		createGui();
+		serializer = new Serializer();
 	}
 
+	//GUI erstellen
 	private void createGui() {
-		// frame erstellen und Menübar
+		// frame erstellen und MenÃ¼bar
 		frame = new JFrame("Entscheidungsknopf");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		createMenuBar();
@@ -50,7 +54,7 @@ public class GUI2Uebung4u5 {
 		JButton save = createSaveButton();
 		save.addActionListener(saveListener);
 		topPanel.add(save);
-		labelCounter = new JLabel(entscheidungen.getSize());
+		labelCounter = new JLabel(decisions.getSize());
 		topPanel.add(labelCounter);
 		frame.add(BorderLayout.NORTH, topPanel);
 
@@ -63,11 +67,13 @@ public class GUI2Uebung4u5 {
 		frame.setVisible(true);
 	}
 
+	//JButton zum Speichern erstellen
 	private JButton createSaveButton() {
 		final JButton saveButton = new JButton("Save");
 		return saveButton;
 	}
 
+	//JButton zum Anklicken erstellen
 	private JButton createButton() {
 		final JButton button = new JButton("Klick mich");
 
@@ -75,54 +81,105 @@ public class GUI2Uebung4u5 {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				button.setText(entscheidungen.getRandomDecision());
+				button.setText(decisions.getRandomDecision());
 			}
 		});
 		return button;
 	}
 
+	//Counter updaten
+	private void counterUpdate() {
+		labelCounter.setText(decisions.getSize());
+	}
+
+	//Savelistener ist der Actionlistener um Einträge zu speichern
 	class SaveListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if (!eingabeFeld.getText().isEmpty()) {
-				entscheidungen.enterDecisions(eingabeFeld.getText());
+				decisions.enterDecisions(eingabeFeld.getText());
 				eingabeFeld.setText(null);
-				labelCounter.setText(entscheidungen.getSize());
-
-			} else {
+				counterUpdate();
+			}
+			else {
 				System.out.println("Du musst etwas eingeben.");
-				;
 			}
 
 		}
 
 	}
 
+	//Menubar erstellen
 	private void createMenuBar() {
 
-		// Menüzeile (JMenuBar) erzeugen und in das Fenster (JFrame) einfügen
+		// MenÃ¼zeile (JMenuBar) erzeugen und in das Fenster (JFrame) einfÃ¼gen
 		JMenuBar bar = new JMenuBar();
 		frame.setJMenuBar(bar);
 
-		// Menü (JMenu) erzeugen und in die Menüzeile (JMenuBar) einfügen
+		// MenÃ¼ (JMenu) erzeugen und in die MenÃ¼zeile (JMenuBar) einfÃ¼gen
 		JMenu dateiMenu = new JMenu("Datei");
 		bar.add(dateiMenu);
 
-		// Menüeinträge (JMenuItem) erzeugen und dem Menü (JMenu) "Datei"
-		// hinzufügen
-		JMenuItem oeffnenItem = new JMenuItem("Öffnen");
-		oeffnenItem.addActionListener(new ActionListener() {
+		JMenuItem loeschenItem = new JMenuItem("Alle Entscheidungen löschen");
+		loeschenItem.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Öffnen geklickt");
+				decisions.listeLoeschen();
+				counterUpdate();
+			}
+		});
+
+		// MenÃ¼eintrÃ¤ge (JMenuItem) erzeugen und dem MenÃ¼ (JMenu) "Datei"
+		// hinzufÃ¼gen
+		JMenuItem ladenItem = new JMenuItem("Entscheidungen laden");
+		ladenItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				JFileChooser chooser = new JFileChooser();
+				int returnValue = chooser.showOpenDialog(frame);
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					serializer.setFilename(chooser.getSelectedFile().getAbsolutePath());
+					decisions.listeErsetzen(serializer.laden());
+					counterUpdate();
+				}
+
+				else {
+					JOptionPane.showMessageDialog(frame, "Es wurde keine Datei geladen.");
+
+				}
+			}
+
+		});
+
+		// Menüeinträge (JMenuItem) erzeugen und dem Menü (JMenu) "Datei"
+		// hinzufÃ¼gen
+		JMenuItem speichernItem = new JMenuItem("Entscheidungen speichern");
+		speichernItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				int returnValue = chooser.showSaveDialog(frame);
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					serializer.setFilename(chooser.getSelectedFile().getAbsolutePath());
+					serializer.abspeichern(decisions);
+					counterUpdate();
+					System.out.println("Erfolgreich gespeicheret");
+				}
+
+				else {
+					JOptionPane.showMessageDialog(frame, "Du musst einen Speicherort auswÃ¤hlen.");
+
+				}
 
 			}
 		});
 
-		// Menüeinträge (JMenuItem) erzeugen und dem Menü (JMenu) "Datei"
-		// hinzufügen
+		// Menu zum Beenden des Programs
 		JMenuItem beendenItem = new JMenuItem("Beenden");
 		beendenItem.addActionListener(new ActionListener() {
 
@@ -140,13 +197,15 @@ public class GUI2Uebung4u5 {
 			}
 		});
 
-		dateiMenu.add(oeffnenItem);
+		dateiMenu.add(ladenItem);
+		dateiMenu.add(loeschenItem);
+		dateiMenu.add(speichernItem);
 		dateiMenu.add(beendenItem);
 
 	}
 
 	public static void main(String[] args) {
-		new GUI2Uebung4u5();
+		new Entscheidungsbutton();
 
 	}
 

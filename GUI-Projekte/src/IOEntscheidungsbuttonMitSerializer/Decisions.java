@@ -1,4 +1,4 @@
-package Entscheidungsbutton;
+package IOEntscheidungsbuttonMitSerializer;
 
 import java.io.Serializable;
 import java.util.ArrayList;

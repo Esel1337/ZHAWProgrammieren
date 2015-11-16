@@ -1,4 +1,4 @@
-package ch.zhaw.netzwerkprogram1;
+package Netzwerkprogram1;
 
 import java.io.IOException;
 import java.io.PrintWriter;

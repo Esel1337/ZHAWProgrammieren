@@ -1,4 +1,4 @@
-package ch.zhaw.serialise;
+package IOSerializeUebungenStunde;
 
 import java.io.Serializable;
 

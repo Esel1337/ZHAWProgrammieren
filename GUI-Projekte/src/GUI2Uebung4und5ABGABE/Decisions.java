@@ -1,4 +1,4 @@
-package ch.zhaw.gui2;
+package GUI2Uebung4und5ABGABE;
 
 //Notes: Man könnte noch check auf Leerzeichen mit 
 

@@ -1,4 +1,4 @@
-package ch.zhaw.exception1Uebung2;
+package Exception1Uebung2;
 
 import java.util.Iterator;
 import java.util.Map;
