@@ -1,4 +1,4 @@
-package LE01ErstesGUI;
+package GUI01ErstesGUILoesung4und5;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -10,11 +10,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-public class MeinErstesGUI4 {
+public class MeinErstesGUI5 {
 
   private JFrame frame;
   
-  public MeinErstesGUI4() {
+  public MeinErstesGUI5() {
     createFrame();
   }
 
@@ -26,8 +26,16 @@ public class MeinErstesGUI4 {
     
     Container contentPane = frame.getContentPane();
     
-    JButton button = new JButton("DrÃ¼ck mich");
-    button.addActionListener(new ButtonListener());
+    final JButton button = new JButton("DrÃ¼ck mich");
+    button.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        button.setText("Danke");
+
+      }
+
+    });
     contentPane.add(button);
     
     frame.pack();
@@ -46,34 +54,27 @@ public class MeinErstesGUI4 {
    
     // MenÃ¼eintrÃ¤ge (JMenuItem) erzeugen und dem MenÃ¼ (JMenu) "Datei" hinzufÃ¼gen
     JMenuItem oeffnenItem = new JMenuItem("Ã–ffnen");
-    oeffnenItem.addActionListener(new OpenActionListener());
+    oeffnenItem.addActionListener(new ActionListener() {
+      
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        System.out.println("Ã–ffnen geklickt");
+        
+      }
+    });
     dateiMenu.add(oeffnenItem);
     
     JMenuItem beendenItem = new JMenuItem("Beenden");
-    beendenItem.addActionListener(new ExitActionListener());
+    beendenItem.addActionListener(new ActionListener() {
+      
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        System.out.println("Beenden geklickt");
+        System.exit(0);
+      }
+    });
     dateiMenu.add(beendenItem);
     
   }
   
-  private class OpenActionListener implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-      System.out.println("Ã–ffnen wurde ausgewÃ¤hlt");
-    }
-  }
-  
-  private class ExitActionListener implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-      System.out.println("Beenden wurde ausgewÃ¤hlt");
-      System.exit(0);
-    }
-  }
-  
-  private class ButtonListener implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-      System.out.println("Button gedrÃ¼ckt");
-    }
-  }
 }
