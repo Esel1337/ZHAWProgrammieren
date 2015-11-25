@@ -10,8 +10,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +29,11 @@ public class DecisionFileManager {
 	}
 
 	public void textSave(File file, List<String> decisions) throws IOException {
+		
+		
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-
+			
+			
 			for (String entry : decisions) {
 				writer.write(entry);
 				writer.write("\n");
@@ -46,7 +47,7 @@ public class DecisionFileManager {
 	public List<String> textLoad(File file) throws IOException {
 		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
 			String eintrag = reader.readLine();
-			List<String> decisions = new ArrayList();
+			List<String> decisions = new ArrayList<String>();
 			while (eintrag != null) {
 				
 				decisions.add(eintrag);

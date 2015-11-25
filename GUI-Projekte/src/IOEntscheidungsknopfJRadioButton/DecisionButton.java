@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -21,6 +22,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class DecisionButton {
 
@@ -37,7 +40,8 @@ public class DecisionButton {
 		decisionData = new DecisionData();
 		createGui();
 		groupButton();
-		;
+		
+		
 	}
 
 	private void createGui() {
@@ -104,6 +108,7 @@ public class DecisionButton {
 
 	private void saveDecisions() {
 		JFileChooser fileChooser = new JFileChooser();
+		
 		int choice = fileChooser.showSaveDialog(frame);
 		if (choice == JFileChooser.APPROVE_OPTION) {
 			try {
@@ -134,11 +139,18 @@ public class DecisionButton {
 	
 	private void loadDecisions() {
 		JFileChooser fileChooser = new JFileChooser();
+		if (text) {FileFilter filter = new FileNameExtensionFilter("Textfile",".txt");
+		fileChooser.addChoosableFileFilter(filter);
+		fileChooser.setFileFilter(filter);
+		}
+		
 		int choice = fileChooser.showOpenDialog(frame);
 		if (choice == JFileChooser.APPROVE_OPTION) {
 			try {
 
 				if (text) {
+					
+					
 					decisionData.loadTextFile(fileChooser.getSelectedFile());
 				} else if (XML) {
 					decisionData.loadXMLFile(fileChooser.getSelectedFile());
@@ -165,8 +177,7 @@ public class DecisionButton {
 		bg1.add(typDateien);
 		bg1.add(typText);
 		bg1.add(typXML);
-
-	}
+			}
 
 	private void createMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
@@ -175,7 +186,7 @@ public class DecisionButton {
 		JMenu textdateiMenu = new JMenu("Speicher-Strategie");
 		JMenuItem loadItem = new JMenuItem("Entscheidungen laden");
 		loadItem.addActionListener(new ActionListener() {
-
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				loadDecisions();
@@ -193,7 +204,8 @@ public class DecisionButton {
 
 		typDateien = new JRadioButton("Dateien bearbeiten");
 		typDateien.addActionListener(new ActionListener() {
-
+			
+			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				text = false;
@@ -202,6 +214,7 @@ public class DecisionButton {
 			}
 
 		});
+		typDateien.setSelected(true);
 
 		typText = new JRadioButton("Textdateien bearbeiten");
 		typText.addActionListener(new ActionListener() {
@@ -222,8 +235,12 @@ public class DecisionButton {
 				text = false;
 				XML = true;
 				datei = false;
+				
+				JOptionPane.showMessageDialog(frame, "Das ist noch nicht implementiert, biete wähle etwas anders aus.");
 			}
-
+			
+			
+			
 		});
 
 		dateiMenu.add(loadItem);
