@@ -3,15 +3,12 @@ package Threads2;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.plaf.basic.BasicTreeUI.TreeCancelEditingAction;
 
 public class GUITread {
 
@@ -19,6 +16,7 @@ public class GUITread {
 	private JPanel panel = new JPanel();
 	private JProgressBar bar = new JProgressBar(0, 100);
 	private int count;
+	private JLabel label = new JLabel("Remaining Threads: ");
 
 	public GUITread() {
 		createAndShowGUI();
@@ -31,31 +29,36 @@ public class GUITread {
 		bar.setSize(200, 200);
 		panel.add(bar);
 		JButton button = new JButton("Knopf");
+
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				System.out.println("ganz am anfang" + count);
 				if (count == 0) {
 
 					neuerThread();
 
 				}
 				count++;
-				System.out.println("von oben" + count);
+				setCounter();
 
 			}
 		});
 		frame.getContentPane().add(BorderLayout.SOUTH, button);
+		frame.getContentPane().add(BorderLayout.CENTER, label);
 		frame.getContentPane().add(BorderLayout.NORTH, panel);
 		frame.setSize(200, 100);
 		frame.setVisible(true);
+
+	}
+
+	private void setCounter() {
+		label.setText("Remaining Threads: " + count);
 	}
 
 	private void neuerThread() {
 		Runnable threadJob = new Updater();
 		Thread meinThread = new Thread(threadJob);
-		System.out.println("meinfred: " + meinThread.getName());
 		meinThread.start();
 
 	}
@@ -84,6 +87,8 @@ public class GUITread {
 			if (i == 100) {
 				count--;
 				System.out.println(count);
+				setCounter();
+
 				if (count > 0)
 
 					neuerThread();
