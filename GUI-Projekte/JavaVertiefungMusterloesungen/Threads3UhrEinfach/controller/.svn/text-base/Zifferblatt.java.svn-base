@@ -1,0 +1,7 @@
+package thread3.uhr.controller;
+
+public interface Zifferblatt {
+
+  void setTime(String time);
+
+}

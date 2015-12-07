@@ -1,0 +1,12 @@
+package thread3.uhr.consoleuhr;
+
+import thread3.uhr.controller.Zifferblatt;
+
+public class ConsoleZifferblatt implements Zifferblatt {
+
+  @Override
+  public void setTime(final String time) {
+     System.out.println(time);
+  }
+
+}

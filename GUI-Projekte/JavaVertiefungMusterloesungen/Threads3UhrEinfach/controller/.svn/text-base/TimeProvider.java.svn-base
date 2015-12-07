@@ -1,0 +1,28 @@
+package thread3.uhr.controller;
+
+import java.time.LocalDateTime;
+
+import thread3.uhr.model.Time;
+
+/**
+ * This class provides the actual time.
+ * 
+ * @author kaspar
+ */
+public class TimeProvider {
+
+  /**
+   * gets the actual time
+   * 
+   * @return the actual time
+   */
+  public static Time getTime() {
+
+    final LocalDateTime now = LocalDateTime.now();
+    final int hour = now.getHour();
+    final int minute = now.getMinute();
+    final int second = now.getSecond();
+
+    return new Time(hour, minute, second);
+  }
+}
